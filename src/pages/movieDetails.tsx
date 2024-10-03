@@ -8,17 +8,17 @@ import { useLikedMovies } from '../context/likedContext';
 
 const MovieDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();  
-  const [movie, setMovie] = useState<Movie | null>(null);
+  const [movie, setMovie] = useState<Movie | null>(null);  
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
   const { addLikedMovie } = useLikedMovies();
-   const [isLiked, setIsLiked] = useState(false); 
+  const [isLiked, setIsLiked] = useState(false); 
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
         const response = await axios.get<MovieApiResponse>(`https://yts.mx/api/v2/movie_details.json?movie_id=${id}`);
-        setMovie(response.data.data.movie);
+        setMovie(response.data.data.movie);  
       } catch (e) {
         setError('Failed to fetch movie details.');
       } finally {
@@ -29,10 +29,10 @@ const MovieDetails: React.FC = () => {
     fetchMovieDetails();
   }, [id]);
 
-    const handleLike = () => {
+  const handleLike = () => {
     if (movie) {
       setIsLiked(!isLiked); 
-      addLikedMovie(movie);
+      addLikedMovie(movie);  
     }
   };
 
@@ -40,7 +40,7 @@ const MovieDetails: React.FC = () => {
 
   if (error) return <div className="text-red-500">{error}</div>;
   
-  if (!movie) return <div>No movie found.</div>;
+  if (!movie) return <div>No movie found.</div>; // This will handle null movie state
 
   return (
     <div className="p-4">
@@ -59,8 +59,7 @@ const MovieDetails: React.FC = () => {
           <p className="break-words md:text-3xl mb-4"><strong>Description:</strong> A thrilling cinematic experience that captures a compelling storyline, memorable characters, and breathtaking visuals. Directed by {movie.director}, this film explores themes of {movie.genres[0]} and keeps audiences engaged from start to finish.
           </p>
 
-           <div className={`flex items-center ${isLiked ? 'bg-blue-500' : 'bg-transparent'} p-2 rounded-md`}>
-
+          <div className={`flex items-center ${isLiked ? 'bg-blue-500' : 'bg-transparent'} p-2 rounded-md`}>
             <FontAwesomeIcon
               icon={faThumbsUp}
               color="white"

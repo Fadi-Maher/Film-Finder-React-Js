@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Movie, MovieApiResponse } from '../types';
+import { Movie, MoviesListApiResponse } from '../types';
 import { faStar, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLikedMovies } from '../context/likedContext';
@@ -22,7 +22,7 @@ const TopMovies: React.FC = () => {
       setError('');
 
       try {
-        const response = await axios.get<MovieApiResponse>('https://yts.mx/api/v2/list_movies.json');
+        const response = await axios.get<MoviesListApiResponse>('https://yts.mx/api/v2/list_movies.json');
         const moviesData = response.data.data.movies;
 
         
